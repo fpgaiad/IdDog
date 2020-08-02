@@ -1,3 +1,11 @@
 <resources>
+
     <string name="app_name">Id Dog</string>
+
+    <string name="email">Email</string>
+    <string name="enter">Entrar</string>
+
+    <string name="dog_image">dog image</string>
+    <string name="image_detail">image detail</string>
+
 </resources>
