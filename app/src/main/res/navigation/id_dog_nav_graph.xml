@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_dog_nav_graph.xml"
+    app:startDestination="@id/loginFragment">
+
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="br.com.iddog.fragment.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_dogsFragment"
+            app:destination="@id/dogsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dogsFragment"
+        android:name="br.com.iddog.fragment.DogsFragment"
+        android:label="fragment_dogs"
+        tools:layout="@layout/fragment_dogs" />
+    <fragment
+        android:id="@+id/huskFragment"
+        android:name="br.com.iddog.fragment.HuskFragment"
+        android:label="fragment_husk"
+        tools:layout="@layout/fragment_husk" >
+        <action
+            android:id="@+id/action_huskFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/labradorFragment"
+        android:name="br.com.iddog.fragment.LabradorFragment"
+        android:label="fragment_labrador"
+        tools:layout="@layout/fragment_labrador" >
+        <action
+            android:id="@+id/action_labradorFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/houndFragment"
+        android:name="br.com.iddog.fragment.HoundFragment"
+        android:label="fragment_hound"
+        tools:layout="@layout/fragment_hound" >
+        <action
+            android:id="@+id/action_houndFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pugFragment"
+        android:name="br.com.iddog.fragment.PugFragment"
+        android:label="fragment_pug"
+        tools:layout="@layout/fragment_pug" >
+        <action
+            android:id="@+id/action_pugFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="br.com.iddog.fragment.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" />
+</navigation>
