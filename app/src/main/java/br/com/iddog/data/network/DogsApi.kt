@@ -5,13 +5,17 @@ import br.com.iddog.data.model.login.LoginResponse
 import retrofit2.Response
 import retrofit2.http.*
 
-interface DogsApi {
+interface DogsApi : WebApi {
 
+    @FormUrlEncoded
     @POST(NetworkConstants.URL_ACTION_LOGIN)
-    @Headers("Content-Type: application/json")
-    suspend fun login(@Body email: String): Response<LoginResponse>
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    override suspend fun login(@Field(value = "email", encoded = true) email: String): Response<LoginResponse>
 
     @GET(NetworkConstants.URL_ACTION_FEED)
     @Headers("Content-Type: application/json")
-    suspend fun getDogs(@Query("category") category: String): Response<FeedResponse>
+    override suspend fun getDogs(
+        @Header("Authorization") token: String,
+        @Query("category") category: String
+    ): Response<FeedResponse>
 }
