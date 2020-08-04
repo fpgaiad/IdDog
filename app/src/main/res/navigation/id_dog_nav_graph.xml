@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="br.com.iddog.fragment.LoginFragment"
+        android:name="br.com.iddog.ui.fragment.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -17,48 +17,42 @@
     </fragment>
     <fragment
         android:id="@+id/dogsFragment"
-        android:name="br.com.iddog.fragment.DogsFragment"
+        android:name="br.com.iddog.ui.fragment.DogsFragment"
         android:label="fragment_dogs"
-        tools:layout="@layout/fragment_dogs" />
-    <fragment
-        android:id="@+id/huskFragment"
-        android:name="br.com.iddog.fragment.HuskFragment"
-        android:label="fragment_husk"
-        tools:layout="@layout/fragment_husk" >
+        tools:layout="@layout/fragment_dogs" >
         <action
-            android:id="@+id/action_huskFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            android:id="@+id/action_dogsFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
     </fragment>
+    <fragment
+        android:id="@+id/huskyFragment"
+        android:name="br.com.iddog.ui.fragment.HuskyFragment"
+        android:label="fragment_husky"
+        tools:layout="@layout/fragment_husky" />
     <fragment
         android:id="@+id/labradorFragment"
-        android:name="br.com.iddog.fragment.LabradorFragment"
+        android:name="br.com.iddog.ui.fragment.LabradorFragment"
         android:label="fragment_labrador"
-        tools:layout="@layout/fragment_labrador" >
-        <action
-            android:id="@+id/action_labradorFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_labrador" />
     <fragment
         android:id="@+id/houndFragment"
-        android:name="br.com.iddog.fragment.HoundFragment"
+        android:name="br.com.iddog.ui.fragment.HoundFragment"
         android:label="fragment_hound"
-        tools:layout="@layout/fragment_hound" >
-        <action
-            android:id="@+id/action_houndFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_hound" />
     <fragment
         android:id="@+id/pugFragment"
-        android:name="br.com.iddog.fragment.PugFragment"
+        android:name="br.com.iddog.ui.fragment.PugFragment"
         android:label="fragment_pug"
-        tools:layout="@layout/fragment_pug" >
-        <action
-            android:id="@+id/action_pugFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_pug" />
     <fragment
         android:id="@+id/detailFragment"
-        android:name="br.com.iddog.fragment.DetailFragment"
+        android:name="br.com.iddog.ui.fragment.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="dog"
+            app:argType="string" />
+    </fragment>
 </navigation>
