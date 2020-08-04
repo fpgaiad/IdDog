@@ -7,5 +7,7 @@
 
     <string name="dog_image">dog image</string>
     <string name="image_detail">image detail</string>
+    <string name="insert_valid_email">Insira um email válido!</string>
+    <string name="error_occurred">Ocorreu um erro. Tente Novamente.</string>
 
 </resources>
