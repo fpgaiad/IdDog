@@ -11,6 +11,10 @@ Desenvolvido em Kotlin, contempla as seguintes funcionalidades:
 * Ao clicar em uma imagem, imagem é exibida de forma expandida.
 * Tratamento de erros.
 
+## Estrutura de Pastas
+
+![Alt text](/packages.png?raw=true "Optional Title")
+
 ## Arquitetura e Libs Utilizadas
 
 O código é estruturado com arquitetura MVVM/Clean Architecture utilizando:
