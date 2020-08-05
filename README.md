@@ -13,7 +13,7 @@ Desenvolvido em Kotlin, contempla as seguintes funcionalidades:
 
 ## Estrutura de Pastas
 
-![](/packages.png?raw=true "Estrutura de Pastas")
+![](/assets/packages.png?raw=true "Estrutura de Pastas")
 
 ## Arquitetura e Libs Utilizadas
 
@@ -31,25 +31,25 @@ O código é estruturado com arquitetura MVVM/Clean Architecture utilizando:
 
 ## ScreenShots
 
-Tela inicial com usuário deslogado
+**Tela inicial com usuário deslogado**
 
-![](/login.png?raw=true "Tela inicial com usuário deslogado")
+![](/assets/login.png?raw=true "Tela inicial com usuário deslogado")
 
-Tela inicial com usuário já logado
+**Tela inicial com usuário já logado**
 
-![](/alreadylogged.png?raw=true "Tela inicial com usuário já logado")
+![](/assets/alreadylogged.png?raw=true "Tela inicial com usuário já logado")
 
-Tela de ViewPager com TabLayou e RecyclerView
+**Tela de ViewPager com TabLayou e RecyclerView**
 
-![](/huskyPhotos.png?raw=true "Lista de fotos")
+![](/assets/huskyPhotos.png?raw=true "Lista de fotos")
 
-Placeholders
+**Placeholders**
 
-![](/pugAndPlaceholder.png?raw=true "Placeholders")
+![](/assets/pugAndPlaceholder.png?raw=true "Placeholders")
 
-Tela de Detalhe
+**Tela de Detalhe**
 
-![](/pugDetail.png?raw=true "Tela de detalhe")
+![](/assets/pugDetail.png?raw=true "Tela de detalhe")
 
 ## Instruções para rodar o projeto
 
