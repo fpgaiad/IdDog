@@ -7,9 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.iddog.data.model.feed.FeedResponse
 import br.com.iddog.data.model.login.LoginResponse
-import br.com.iddog.data.network.NetworkConstants
 import br.com.iddog.repository.DogsRepository
 import br.com.iddog.util.Resource
+import br.com.iddog.util.UserHelper
+import br.com.iddog.util.ViewModelConstants
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -25,38 +26,54 @@ class DogsViewModel @ViewModelInject constructor(
     val user: LiveData<Resource<LoginResponse>>
         get() = _user
 
-    var emailToLogin: String = "your@email.com"
-    var userData: MutableMap<String, String> = mutableMapOf()
+    var emailToLogin: String = ""
 
     fun login() {
-        if (userData.containsKey(emailToLogin)) {
+        val storage = UserHelper.getStorage()
+        if (emailToLogin == storage?.getString("email", "invalidEmail")
+            && !storage.getString("token", null).isNullOrEmpty()
+        ) {
             _user.postValue(Resource.Success())
-        }
-        viewModelScope.launch {
-            _user.postValue(Resource.Loading())
-            val response = repository.login(emailToLogin)
-            _user.postValue(handleResponse(response))
+            return
+        } else {
+            viewModelScope.launch {
+                _user.postValue(Resource.Loading())
+                val response = repository.login(emailToLogin)
+                _user.postValue(handleResponse(response))
+            }
         }
     }
 
-    fun getDogsByCategory(category: String) = viewModelScope.launch {
-        _dogs.postValue(Resource.Loading())
-        val response =
-            repository.getDogs(userData[emailToLogin] ?: NetworkConstants.TOKEN, category)
-        _dogs.postValue(handleResponse(response))
+    fun getDogsByCategory(category: String) {
+        val token = getToken()
+        token?.let {
+            viewModelScope.launch {
+                _dogs.postValue(Resource.Loading())
+                val response = repository.getDogs(token, category)
+                _dogs.postValue(handleResponse(response))
+            }
+        }
+    }
+
+    private fun getToken(): String? {
+        val storage = UserHelper.getStorage()
+        return when {
+            !storage?.getString("token", null).isNullOrEmpty() -> {
+                storage?.getString("token", null).toString()
+            }
+            else -> {
+                _dogs.postValue(Resource.Error(ViewModelConstants.INVALID_TOKEN))
+                null
+            }
+        }
     }
 
     private inline fun <reified T> handleResponse(response: Response<T>): Resource<T> {
         if (response.isSuccessful) {
-            if (T::class == LoginResponse::class) saveUserData(response as Response<LoginResponse>)
             response.body()?.let { return Resource.Success(it) }
         }
-        return Resource.Error(response.message())
-    }
-
-    private fun saveUserData(response: Response<LoginResponse>) {
-        response.body()?.user?.apply {
-            userData[email] = token
-        }
+        var errorMessage = ViewModelConstants.GENERIC_ERROR
+        if (T::class == FeedResponse::class) errorMessage = ViewModelConstants.UNAUTHORIZED
+        return Resource.Error(errorMessage)
     }
 }
