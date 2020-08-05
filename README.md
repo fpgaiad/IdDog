@@ -13,7 +13,7 @@ Desenvolvido em Kotlin, contempla as seguintes funcionalidades:
 
 ## Estrutura de Pastas
 
-![Alt text](/packages.png?raw=true "Optional Title")
+![](/packages.png?raw=true "Estrutura de Pastas")
 
 ## Arquitetura e Libs Utilizadas
 
@@ -28,6 +28,28 @@ O código é estruturado com arquitetura MVVM/Clean Architecture utilizando:
 * **Glide:** Biblioteca para exibição e cache de imagens com o menor tempo de download e exibição das imagens em cache, [segundo estudo](https://proandroiddev.com/coil-vs-picasso-vs-glide-get-ready-go-774add8cfd40);
 * **Timber:** Utilizada para facilitar utilização de Logs durante o projeto;
 * **Stetho:** Utilizada para facilitar debug das requisições para a Api.
+
+## ScreenShots
+
+Tela inicial com usuário deslogado
+
+![](/login.png?raw=true "Tela inicial com usuário deslogado")
+
+Tela inicial com usuário já logado
+
+![](/alreadylogged.png?raw=true "Tela inicial com usuário já logado")
+
+Tela de ViewPager com TabLayou e RecyclerView
+
+![](/huskyPhotos.png?raw=true "Lista de fotos")
+
+Placeholders
+
+![](/pugAndPlaceholder.png?raw=true "Placeholders")
+
+Tela de Detalhe
+
+![](/pugDetail.png?raw=true "Tela de detalhe")
 
 ## Instruções para rodar o projeto
 
