@@ -1,4 +1,4 @@
-package br.com.iddog.data.network
+package br.com.iddog.util
 
 class NetworkConstants {
 
@@ -6,7 +6,5 @@ class NetworkConstants {
         const val BASE_URL = "https://iddog-nrizncxqba-uc.a.run.app"
         const val URL_ACTION_LOGIN = "signup"
         const val URL_ACTION_FEED = "feed"
-
-        const val TOKEN = ""
     }
 }
