@@ -16,7 +16,6 @@ import br.com.iddog.util.Resource
 import br.com.iddog.viewmodel.DogsViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_husky.*
 import kotlinx.android.synthetic.main.fragment_labrador.*
 
 @AndroidEntryPoint
@@ -63,7 +62,10 @@ class LabradorFragment : Fragment(R.layout.fragment_labrador) {
     }
 
     private fun showError(view: View, message: String) {
-        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+            .setTextColor(resources.getColor(R.color.primaryTextColor))
+            .setBackgroundTint(resources.getColor(R.color.secondaryDarkColor))
+            .show()
     }
 
     private fun setupRecyclerView(view: View, feedResponse: FeedResponse) {

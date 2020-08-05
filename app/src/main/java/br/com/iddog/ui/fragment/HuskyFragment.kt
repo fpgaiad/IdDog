@@ -44,6 +44,7 @@ class HuskyFragment : Fragment(R.layout.fragment_husky) {
                     hideProgressBar()
                     response.message?.let { message ->
                         showError(view, message)
+                        findNavController().navigate(R.id.action_dogsFragment_to_loginFragment)
                     }
                 }
                 is Resource.Loading -> {
@@ -62,7 +63,10 @@ class HuskyFragment : Fragment(R.layout.fragment_husky) {
     }
 
     private fun showError(view: View, message: String) {
-        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+            .setTextColor(resources.getColor(R.color.primaryTextColor))
+            .setBackgroundTint(resources.getColor(R.color.secondaryDarkColor))
+            .show()
     }
 
     private fun setupRecyclerView(view: View, feedResponse: FeedResponse) {

@@ -62,7 +62,10 @@ class PugFragment : Fragment(R.layout.fragment_pug) {
     }
 
     private fun showError(view: View, message: String) {
-        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+            .setTextColor(resources.getColor(R.color.primaryTextColor))
+            .setBackgroundTint(resources.getColor(R.color.secondaryDarkColor))
+            .show()
     }
 
     private fun setupRecyclerView(view: View, feedResponse: FeedResponse) {
