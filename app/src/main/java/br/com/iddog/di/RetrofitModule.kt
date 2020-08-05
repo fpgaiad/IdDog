@@ -1,7 +1,7 @@
 package br.com.iddog.di
 
 import br.com.iddog.data.network.DogsApi
-import br.com.iddog.data.network.NetworkConstants
+import br.com.iddog.util.NetworkConstants
 import br.com.iddog.data.network.WebApi
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
