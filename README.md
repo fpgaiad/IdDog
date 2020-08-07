@@ -6,7 +6,7 @@ Desenvolvido em Kotlin, contempla as seguintes funcionalidades:
 
 * Tela inicial onde o usuário faz seu login entrando com um email válido;
 * Armazenamento local do token retornado pela Api no login, para autenticar usuário nos próximos requests para a Api;
-* Após login com sucesso, usuário será redirecionado para tela com lista das imagens dos cachorros retornados em GridLayout de duas colunas quando celular em modo retrato e em três colunas quando em modo paisagem.
+* Após login com sucesso, usuário será redirecionado para tela com lista das imagens dos cachorros retornados em GridLayout de duas colunas quando device em modo retrato e em três colunas quando em modo paisagem.
 * Usuário navega entre as quatro raças de cachorros (husky, labrador, hound e pug) via ViewPager com TabLayour;
 * Ao clicar em uma imagem, imagem é exibida de forma expandida.
 * Tratamento de erros.
