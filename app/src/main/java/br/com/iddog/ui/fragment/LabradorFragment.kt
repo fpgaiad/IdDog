@@ -8,7 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_labrador.*
 
 @AndroidEntryPoint
-class LabradorFragment : BaseFragment(R.layout.fragment_labrador, LABRADOR) {
+class LabradorFragment : BaseFragment {
 
     override fun setupRecyclerView(view: View) {
         val orientation = activity?.resources?.configuration?.orientation
