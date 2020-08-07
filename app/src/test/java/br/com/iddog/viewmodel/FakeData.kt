@@ -47,7 +47,7 @@ object FakeData {
         return Response.success(fakeLoginResponse)
     }
 
-    fun getFakeErrorFeedResponse(dogCategory: String): Response<FeedResponse> {
+    fun getFakeErrorFeedResponse(): Response<FeedResponse> {
         return Response.error(
             401,
             ResponseBody.create(
