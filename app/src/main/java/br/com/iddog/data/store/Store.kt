@@ -7,6 +7,4 @@ interface Store {
     fun saveUser(email: String, token: String)
 
     fun getUser(): User?
-
-    fun isUserLogged(): Boolean
 }

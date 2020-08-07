@@ -29,8 +29,4 @@ class UserStore @Inject constructor(private val storage: SharedPreferences) : St
                 )
         } else null
     }
-
-    override fun isUserLogged(): Boolean {
-        return getUser() != null
-    }
 }

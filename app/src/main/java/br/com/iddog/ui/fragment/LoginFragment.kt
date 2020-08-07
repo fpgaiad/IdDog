@@ -34,7 +34,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         setUserInterface()
 
         btnLogin.setOnClickListener {
-            if (storage.isUserLogged()) {
+            if (isLoggedUi) {
                 navigateToDogsList()
             } else {
                 val email = etEmailInput.text.toString()

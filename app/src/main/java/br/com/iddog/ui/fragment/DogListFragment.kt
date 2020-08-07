@@ -14,16 +14,17 @@ import br.com.iddog.util.HomeViewPagerFragmentDirections
 import br.com.iddog.util.Resource
 import br.com.iddog.viewmodel.DogsViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_dog_list.*
-import kotlinx.android.synthetic.main.fragment_hound.*
 
-class BaseFragment() : Fragment(R.layout.fragment_pug) {
+@AndroidEntryPoint
+class DogListFragment : Fragment(R.layout.fragment_dog_list) {
 
     companion object {
-        val CATEGORY = "dogCategory"
+        const val CATEGORY = "dogCategory"
 
         fun newInstance(dogCategory: String): Fragment {
-            val fragment = BaseFragment()
+            val fragment = DogListFragment()
             val args = Bundle().apply {
                 putString(CATEGORY, dogCategory)
             }
@@ -70,7 +71,7 @@ class BaseFragment() : Fragment(R.layout.fragment_pug) {
         })
     }
 
-    fun setupRecyclerView(view: View) {
+    private fun setupRecyclerView(view: View) {
         val orientation = activity?.resources?.configuration?.orientation
         dogListAdapter = DogListAdapter(::handleCharacterClick)
         rvDogs.apply {
@@ -84,12 +85,12 @@ class BaseFragment() : Fragment(R.layout.fragment_pug) {
         }
     }
 
-    fun hideProgressBar() {
-        progress.visibility = View.GONE
+    private fun hideProgressBar() {
+        pbDogs.visibility = View.GONE
     }
 
-    fun showProgressBar() {
-        progress.visibility = View.VISIBLE
+    private fun showProgressBar() {
+        pbDogs.visibility = View.VISIBLE
     }
 
     private fun showError(view: View, message: String) {
@@ -99,14 +100,14 @@ class BaseFragment() : Fragment(R.layout.fragment_pug) {
             .show()
     }
 
-    protected fun getSpanCount(orientation: Int?): Int {
+    private fun getSpanCount(orientation: Int?): Int {
         return when (orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> 3
             else -> 2
         }
     }
 
-    protected fun handleCharacterClick(urlDogImage: String) {
+    private fun handleCharacterClick(urlDogImage: String) {
         val direction = HomeViewPagerFragmentDirections
             .actionViewPagerFragmentToDetailFragment(urlDogImage)
         findNavController().navigate(direction)
