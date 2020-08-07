@@ -3,6 +3,7 @@ package br.com.iddog.ui.fragment
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import br.com.iddog.R
 import br.com.iddog.util.Resource
 import br.com.iddog.util.UserHelper
+import br.com.iddog.util.UserHelper.EMAIL_KEY
 import br.com.iddog.util.ValidationHelper
 import br.com.iddog.viewmodel.DogsViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -30,7 +32,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         btnLogin.setOnClickListener {
             if (isLoggedUi) {
-                viewModel.emailToLogin = storage?.getString("email", "").toString()
+                viewModel.emailToLogin = storage?.getString(EMAIL_KEY, "").toString()
                 viewModel.login()
             } else {
                 val insertedEmail = etEmailInput.text.toString()
@@ -73,8 +75,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun setUserInterface(storage: SharedPreferences?) {
-        if (!storage?.getString("email", "").isNullOrEmpty()) {
-            val storedEmail = storage?.getString("email", null)
+        if (!storage?.getString(EMAIL_KEY, "").isNullOrEmpty()) {
+            val storedEmail = storage?.getString(EMAIL_KEY, null)
             storedEmail?.let { setUiToLoggedUser(it) }
         } else {
             setUiToUnloggedUser()
@@ -83,7 +85,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun setUiToLoggedUser(email: String) {
         isLoggedUi = true
-        val loggedEmailText = "Você já está logado como\n$email"
+        val loggedEmailText = "${getString(R.string.logged_as)}\n$email"
         tvLoggedEmail.text = loggedEmailText
         tvLoggedEmail.visibility = View.VISIBLE
         etEmailInput.visibility = View.GONE

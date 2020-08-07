@@ -1,5 +1,6 @@
 package br.com.iddog.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +11,9 @@ import br.com.iddog.data.model.login.LoginResponse
 import br.com.iddog.repository.DogsRepository
 import br.com.iddog.util.Resource
 import br.com.iddog.util.UserHelper
+import br.com.iddog.util.UserHelper.EMAIL_KEY
+import br.com.iddog.util.UserHelper.INVALID_EMAIL
+import br.com.iddog.util.UserHelper.TOKEN_KEY
 import br.com.iddog.util.ViewModelConstants
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -30,8 +34,8 @@ class DogsViewModel @ViewModelInject constructor(
 
     fun login() {
         val storage = UserHelper.getStorage()
-        if (emailToLogin == storage?.getString("email", "invalidEmail")
-            && !storage.getString("token", null).isNullOrEmpty()
+        if (emailToLogin == storage?.getString(EMAIL_KEY, INVALID_EMAIL)
+            && !storage.getString(TOKEN_KEY, null).isNullOrEmpty()
         ) {
             _user.postValue(Resource.Success())
             return
@@ -58,8 +62,8 @@ class DogsViewModel @ViewModelInject constructor(
     private fun getToken(): String? {
         val storage = UserHelper.getStorage()
         return when {
-            !storage?.getString("token", null).isNullOrEmpty() -> {
-                storage?.getString("token", null).toString()
+            !storage?.getString(TOKEN_KEY, null).isNullOrEmpty() -> {
+                storage?.getString(TOKEN_KEY, null).toString()
             }
             else -> {
                 _dogs.postValue(Resource.Error(ViewModelConstants.INVALID_TOKEN))
