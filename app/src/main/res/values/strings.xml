@@ -8,4 +8,5 @@
     <string name="image_detail">image detail</string>
     <string name="insert_valid_email">Insira um email válido!</string>
     <string name="change_email">Trocar email</string>
+    <string name="logged_as">Você já está logado como</string>
 </resources>
