@@ -7,32 +7,42 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import br.com.iddog.R
 import br.com.iddog.ui.adapter.DogListAdapter
 import br.com.iddog.util.HomeViewPagerFragmentDirections
 import br.com.iddog.util.Resource
 import br.com.iddog.viewmodel.DogsViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_dog_list.*
 
-abstract class BaseFragment(
-    layout: Int,
-    private var dogCategory: String
-) : Fragment(layout) {
+@AndroidEntryPoint
+class DogListFragment : Fragment(R.layout.fragment_dog_list) {
+
+    companion object {
+        const val CATEGORY = "dogCategory"
+
+        fun newInstance(dogCategory: String): Fragment {
+            val fragment = DogListFragment()
+            val args = Bundle().apply {
+                putString(CATEGORY, dogCategory)
+            }
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     private val viewModel: DogsViewModel by viewModels()
+    private var dogCategory: String? = null
 
     lateinit var dogListAdapter: DogListAdapter
 
-    companion object {
-        const val HUSKY = "husky"
-        const val LABRADOR = "labrador"
-        const val HOUND = "hound"
-        const val PUG = "pug"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getDogsByCategory(dogCategory)
+
+        dogCategory = arguments?.getString(CATEGORY)
+        dogCategory?.let { viewModel.getDogsByCategory(it) }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,9 +71,27 @@ abstract class BaseFragment(
         })
     }
 
-    open fun hideProgressBar() {}
+    private fun setupRecyclerView(view: View) {
+        val orientation = activity?.resources?.configuration?.orientation
+        dogListAdapter = DogListAdapter(::handleCharacterClick)
+        rvDogs.apply {
+            adapter = dogListAdapter
+            layoutManager = GridLayoutManager(
+                view.context,
+                getSpanCount(orientation),
+                GridLayoutManager.VERTICAL,
+                false
+            )
+        }
+    }
 
-    open fun showProgressBar() {}
+    private fun hideProgressBar() {
+        pbDogs.visibility = View.GONE
+    }
+
+    private fun showProgressBar() {
+        pbDogs.visibility = View.VISIBLE
+    }
 
     private fun showError(view: View, message: String) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG)
@@ -72,16 +100,14 @@ abstract class BaseFragment(
             .show()
     }
 
-    open fun setupRecyclerView(view: View) {}
-
-    protected fun getSpanCount(orientation: Int?): Int {
+    private fun getSpanCount(orientation: Int?): Int {
         return when (orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> 3
             else -> 2
         }
     }
 
-    protected fun handleCharacterClick(urlDogImage: String) {
+    private fun handleCharacterClick(urlDogImage: String) {
         val direction = HomeViewPagerFragmentDirections
             .actionViewPagerFragmentToDetailFragment(urlDogImage)
         findNavController().navigate(direction)

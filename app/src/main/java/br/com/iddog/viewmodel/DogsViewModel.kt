@@ -1,6 +1,5 @@
 package br.com.iddog.viewmodel
 
-import androidx.annotation.VisibleForTesting
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,18 +7,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.iddog.data.model.feed.FeedResponse
 import br.com.iddog.data.model.login.LoginResponse
+import br.com.iddog.data.store.Store
 import br.com.iddog.repository.DogsRepository
 import br.com.iddog.util.Resource
-import br.com.iddog.util.UserHelper
-import br.com.iddog.util.UserHelper.EMAIL_KEY
-import br.com.iddog.util.UserHelper.INVALID_EMAIL
-import br.com.iddog.util.UserHelper.TOKEN_KEY
 import br.com.iddog.util.ViewModelConstants
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
 class DogsViewModel @ViewModelInject constructor(
-    private val repository: DogsRepository
+    private val repository: DogsRepository,
+    private val userStore: Store
 ) : ViewModel() {
 
     private val _dogs: MutableLiveData<Resource<FeedResponse>> = MutableLiveData()
@@ -30,44 +27,23 @@ class DogsViewModel @ViewModelInject constructor(
     val user: LiveData<Resource<LoginResponse>>
         get() = _user
 
-    var emailToLogin: String = ""
-
-    fun login() {
-        val storage = UserHelper.getStorage()
-        if (emailToLogin == storage?.getString(EMAIL_KEY, INVALID_EMAIL)
-            && !storage.getString(TOKEN_KEY, null).isNullOrEmpty()
-        ) {
-            _user.postValue(Resource.Success())
-            return
-        } else {
-            viewModelScope.launch {
-                _user.postValue(Resource.Loading())
-                val response = repository.login(emailToLogin)
-                _user.postValue(handleResponse(response))
+    fun login(email: String) {
+        viewModelScope.launch {
+            _user.postValue(Resource.Loading())
+            val response = repository.login(email)
+            response.body()?.user?.apply {
+                userStore.saveUser(this.email, token)
             }
+            _user.postValue(handleResponse(response))
         }
     }
 
     fun getDogsByCategory(category: String) {
-        val token = getToken()
-        token?.let {
+        userStore.getUser()?.token?.let { token ->
             viewModelScope.launch {
                 _dogs.postValue(Resource.Loading())
                 val response = repository.getDogs(token, category)
                 _dogs.postValue(handleResponse(response))
-            }
-        }
-    }
-
-    private fun getToken(): String? {
-        val storage = UserHelper.getStorage()
-        return when {
-            !storage?.getString(TOKEN_KEY, null).isNullOrEmpty() -> {
-                storage?.getString(TOKEN_KEY, null).toString()
-            }
-            else -> {
-                _dogs.postValue(Resource.Error(ViewModelConstants.INVALID_TOKEN))
-                null
             }
         }
     }

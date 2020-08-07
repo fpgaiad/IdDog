@@ -1,5 +1,7 @@
 package br.com.iddog.di
 
+import br.com.iddog.data.store.Store
+import br.com.iddog.data.store.UserStore
 import br.com.iddog.repository.DogsRepository
 import br.com.iddog.repository.DogsRepositoryImpl
 import dagger.Binds
@@ -16,5 +18,12 @@ abstract class DataModule {
     @Binds
     abstract fun bindDogsRepositoryImpl(
         repository: DogsRepositoryImpl
-    ) : DogsRepository
+    ): DogsRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindUserStore(
+        userStore: UserStore
+    ): Store
 }
+

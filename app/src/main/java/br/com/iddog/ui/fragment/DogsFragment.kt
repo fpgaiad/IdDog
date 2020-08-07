@@ -11,24 +11,16 @@ import kotlinx.android.synthetic.main.fragment_dogs.*
 
 @AndroidEntryPoint
 class DogsFragment : Fragment(R.layout.fragment_dogs) {
+    var adapter: BreedViewPagerAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewPagerDogs.adapter = BreedViewPagerAdapter(this)
+        adapter = BreedViewPagerAdapter(this)
+        viewPagerDogs.adapter = adapter
 
         TabLayoutMediator(tabLayoutDogs, viewPagerDogs) { tab, position ->
-            tab.text = getTabTitle(position)
+            tab.text = adapter?.getTitle(position)
         }.attach()
-    }
-
-    private fun getTabTitle(position: Int): String? {
-        return when (position) {
-            HUSKY_PAGE_INDEX -> "Husk"
-            LABRADOR_PAGE_INDEX -> "Labrador"
-            HOUND_PAGE_INDEX -> "Hound"
-            PUG_PAGE_INDEX -> "Pug"
-            else -> null
-        }
     }
 }
